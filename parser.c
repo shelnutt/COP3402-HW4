@@ -33,6 +33,7 @@ void expression(lexeme *list);
 void condition(lexeme *list);
 void term(lexeme *list);
 void factor(lexeme *list);
+void logic(lexeme *list);
 
 
 
@@ -808,4 +809,35 @@ void factor(lexeme *list)
 	else
 		printparseerror(11);
 
+}
+
+void logic (lexeme *list)
+{
+	if(list[lindex].type == notsym)
+	{
+		lindex++;
+		condition(list);
+		emit(2,0,14);
+	}
+	else
+	{
+		condition(list);
+		while(list[lindex].type == andsym || list[lindex].type == orsym)
+		{
+			if(list[lindex].type == andsym)
+			{
+				lindex++;
+				condition(list);
+				emit(2,0,12);
+				regcounter--;
+			}
+			else
+			{
+				lindex++;
+				condition(list);
+				emit(2,0,13);
+				regcounter--;
+			}
+		}
+	}
 }

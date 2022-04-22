@@ -9,7 +9,7 @@ typedef enum token_type {
 	callsym, gtrsym, ifsym, geqsym, thensym, multsym, elsesym,
 	divsym, whilesym, plussym, dosym, minussym, beginsym, lparensym,
 	endsym, rparensym, readsym, commasym, writesym, periodsym, identsym,
-	semicolonsym, numbersym, assignsym
+	semicolonsym, numbersym, assignsym, andsym, orsym, notsym
 } token_type;
 
 typedef struct lexeme {
