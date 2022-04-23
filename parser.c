@@ -630,7 +630,14 @@ void STATEMENT(lexeme *list)
 void condition(lexeme *list)
 {
 	if(list[lindex].type == lparensym)
+	{
+		lindex++;
 		logic(list);
+		if(list[lindex].type == rparensym)
+			lindex++;
+		else
+			printparseerror(12);
+	}
 
 	else
 	{
