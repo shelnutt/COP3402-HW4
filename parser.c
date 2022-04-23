@@ -281,6 +281,14 @@ void printassemblycode()
 					case 11:
 						printf("GEQ\t");
 						break;
+					case 12:
+						printf("AND\t");
+						break;
+					case 13:
+						printf("ORR\t");
+						break;
+					case 14:
+						printf("NOT\t");
 					default:
 						printf("err\t");
 						break;
@@ -514,7 +522,7 @@ void STATEMENT(lexeme *list)
 	else if(list[lindex].type == ifsym)
 	{
 		lindex++;
-		condition(list);
+		logic(list);
 		jpcIdx = cIndex;
 		emit(8,0,0);
 		regcounter--;
@@ -542,7 +550,7 @@ void STATEMENT(lexeme *list)
 	{
 		lindex++;
 		loopIdx = cIndex;
-		condition(list);
+		logic(list);
 		
 		if (list[lindex].type == dosym)
 		{
@@ -621,52 +629,59 @@ void STATEMENT(lexeme *list)
 
 void condition(lexeme *list)
 {
-	expression(list);
+	if(list[lindex].type == lparensym)
+		logic(list);
 
-	if(list[lindex].type == eqlsym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,6);
-		regcounter--;
-	}
-	else if(list[lindex].type == neqsym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,7);
-		regcounter--;
-	}
-	else if(list[lindex].type == lsssym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,8);
-		regcounter--;
-	}
-	else if(list[lindex].type == leqsym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,9);
-		regcounter--;
-	}
-	else if(list[lindex].type ==  gtrsym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,10);
-		regcounter--;
-	}
-	else if(list[lindex].type == geqsym)
-	{
-		lindex++;
-		expression(list);
-		emit(2,0,11);
-		regcounter--;
-	}
 	else
-		printparseerror(10);
+	{
+		expression(list);
+
+		if(list[lindex].type == eqlsym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,6);
+			regcounter--;
+		}
+		else if(list[lindex].type == neqsym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,7);
+			regcounter--;
+		}
+		else if(list[lindex].type == lsssym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,8);
+			regcounter--;
+		}
+		else if(list[lindex].type == leqsym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,9);
+			regcounter--;
+		}
+		else if(list[lindex].type ==  gtrsym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,10);
+			regcounter--;
+		}
+		else if(list[lindex].type == geqsym)
+		{
+			lindex++;
+			expression(list);
+			emit(2,0,11);
+			regcounter--;
+		}
+		else
+			printparseerror(10);
+	}
+	
 }
 
 void expression(lexeme *list)
