@@ -37,7 +37,7 @@ lexeme *lexanalyzer(char *input, int printFlag)
 			// whitespace scenario
 			if(input[index] == ' ' || input[index] == ';' || input[index] == '.' || iscntrl(input[index]) || input[index] == ','
 				|| input[index] == '<' || input[index] == '>' || input[index] == '!' || input[index] == '(' || input[index] == ')'
-				|| input[index] == '+' || input[index] == ',' || input[index] == '=')
+				|| input[index] == '+' || input[index] == ',' || input[index] == '=' || input[index] == '&' || input[index] == '|')
 			{
 				// printf("%s",str);
 				// potential lex is a number
@@ -506,7 +506,7 @@ lexeme *lexanalyzer(char *input, int printFlag)
 			}
 			if(isdigit(input[index]) || isalpha(input[index]) || input[index] == '=' || input[index] == '!'
 			  || input[index] == '*' || input[index] == '(' || input[index] == ')'
-			   || input[index] == ':' || input[index] == '/' || input[index] == '-')
+			   || input[index] == ':' || input[index] == '/' || input[index] == '-' || input[index] == '&' || input[index] == '|')
 			{
 			str[x] = input[index];
 			x++;
@@ -636,6 +636,15 @@ void printtokens()
 				break;
 			case numbersym:
 				printf("%11d\t%d", list[i].value, numbersym);
+				break;
+			case andsym:
+				printf("%11s\t%d", "&&", andsym);
+				break;
+			case orsym:
+				printf("%11s\t%d", "||", orsym);
+				break;
+			case notsym:
+				printf("%11s\t%d", "!", notsym);
 				break;
 		}
 		printf("\n");
