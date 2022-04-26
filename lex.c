@@ -378,6 +378,30 @@ lexeme *lexanalyzer(char *input, int printFlag)
 						str = (char*) malloc(strlen(input) * sizeof(char));
 						x = 0;
 					}
+					else if((strcmp(str,"&&")) == 0)
+					{
+						list[lex_index].type = 32;
+						lex_index++;
+						free(str);
+						str = (char*) malloc(strlen(input)*sizeof(char));
+						x=0;
+					}
+					else if((strcmp(str,"||")) == 0)
+					{
+						list[lex_index].type = 33;
+						lex_index++;
+						free(str);
+						str = (char*)malloc(strlen(input)*sizeof(char));
+						x=0;
+					}
+					else if((strcmp(str,"!")) == 0)
+					{
+						list[lex_index].type = 34;
+						lex_index++;
+						free(str);
+						str = (char*)malloc(strlen(input)*sizeof(char));
+						x=0;
+					}
 
 
 					}
