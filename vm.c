@@ -1,5 +1,3 @@
-// Shawn Sherman
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,8 +77,11 @@ void execute_program(instruction *code, int printFlag)
 					case(2): //OPR
 						switch(IR->m){
 							case(0): // RET
+								SP = BP - 1;
+								PC = data_s[BP + 2];
+								BP = data_s[BP + 1];
 
-								print_execution(line, "OPR",*IR, PC, BP,SP,RP, data_s,register_s);
+								print_execution(line, "RET",*IR, PC, BP,SP,RP, data_s,register_s);
 								break;
 
 							case(1): //NEG
@@ -155,7 +156,32 @@ void execute_program(instruction *code, int printFlag)
 								RP++;
 								print_execution(line, "GEQ",*IR, PC, BP,SP,RP, data_s,register_s);
 								break;
+							case(12): //AND
+								if(register_s[RP+2] == 1 && register_s[RP+1] == 1)
+									register_s[RP+2] = 1;
+								else
+									register_s[RP+2] = 0;
 
+								RP++;	
+								print_execution(line, "AND", *IR, PC,BP,SP,RP,data_s,register_s);
+								break;
+							case(13): // ORR
+								if(register_s[RP+2] == 1 || register_s[RP+1] == 1)
+									register_s[RP+2] = 1;
+								else 
+									register_s[RP+2] = 0;
+
+								RP++;
+								print_execution(line,"ORR",*IR,PC,BP,SP,RP,data_s,register_s);
+								break;
+							case(14): //NOT
+								if(register_s[RP+1] == 1)
+									register_s[RP+1] = 0;
+								else
+									register_s[RP+1] = 1;
+
+								print_execution(line,"NOT",*IR,PC,BP,SP,RP,data_s,register_s);
+								break;
 							}
 						break;
 					case(3): // LOD
@@ -177,6 +203,7 @@ void execute_program(instruction *code, int printFlag)
 						data_s[SP] = PC; //return address
 						BP = SP - 2; // static link of the new activation record
 						PC = IR->m; // PC = M
+						SP = SP-3;
 						print_execution(line, "CAL",*IR, PC, BP,SP,RP, data_s,register_s);
 						break;
 					case(06): //INC
@@ -210,6 +237,7 @@ void execute_program(instruction *code, int printFlag)
 							case(3): //HAL
 								halt = 0;
 								print_execution(line, "HAL",*IR, PC, BP,SP,RP, data_s,register_s);
+								printf(" ");
 								break;
 
 				}
@@ -221,3 +249,4 @@ void execute_program(instruction *code, int printFlag)
 	}
 
 }
+
