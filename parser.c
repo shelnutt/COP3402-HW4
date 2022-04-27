@@ -289,6 +289,7 @@ void printassemblycode()
 						break;
 					case 14:
 						printf("NOT\t");
+						break;
 					default:
 						printf("err\t");
 						break;
