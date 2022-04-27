@@ -85,7 +85,7 @@ void execute_program(instruction *code, int printFlag)
 								break;
 
 							case(1): //NEG
-								register_s[RP] = register_s[RP] * -1;
+								register_s[RP+1] = register_s[RP+1] * -1;
 								print_execution(line, "NEG",*IR, PC, BP,SP,RP, data_s,register_s);
 								break;
 							case(2): //ADD
